@@ -18,7 +18,7 @@
 //             return res.status(500).json({ message: `Could not count User` });
 //         }
 
-//     } catch (error) {
+//     } catch (errorh) {
 //         console.error(error);
 //         return res.status(500).json({ type: error.name, message: error.message });
 //     }

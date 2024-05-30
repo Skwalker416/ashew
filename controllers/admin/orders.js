@@ -43,7 +43,7 @@ exports.getOrdersCount = async function(req, res) {
 };
 exports.changeOrderStatus = async function(req, res) {
     try {
-        const ordered = req.params.id;
+        const orderId = req.params.id;
         const newStatus = req.body.status; //admin will send a new status in the request body
 
         let order = await Order.findById(orderId);

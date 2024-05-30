@@ -1,11 +1,22 @@
 const express = require('express');
 
 const router = express.Router();
-
+const { fetchValidTaxNumbers } = require('../utils/taxNumberUtils');
 const authController = require('../controllers/auth');
 
 const { body } = require('express-validator')
 
+// const validTaxNumbers = ['00000001', '000000011', '00000111'];
+
+// Custom validation function for tax number
+
+const isValidTaxNumber = async value => {
+    const validTaxNumbers = await fetchValidTaxNumbers();
+    if (!validTaxNumbers.includes(value)) {
+        throw new Error('Invalid tax number');
+    }
+    return true;
+};
 const validateUser = [
     body('firstName').not().isEmpty().withMessage('user first name is required'),
     body('lastName').not().isEmpty().withMessage('user last name is required'),
@@ -23,7 +34,9 @@ const validateVendor = [
     body('password')
     .isLength({ min: 8 }).withMessage('Password must be at least 8 characters')
     .isStrongPassword().withMessage('Password must contain at least one uppercase or symbol'),
-    body('phone').isMobilePhone().withMessage('Please enter a valid phone number')
+    body('phone').isMobilePhone().withMessage('Please enter a valid phone number'),
+    body('taxNumber').custom(isValidTaxNumber).withMessage('Please enter a valid MID / Merchant Identification')
+
 ];
 
 const validateEventOrganizer = [
@@ -32,7 +45,9 @@ const validateEventOrganizer = [
     body('password')
     .isLength({ min: 8 }).withMessage('Password must be at least 8 characters')
     .isStrongPassword().withMessage('Password must contain at least one uppercase or symbol'),
-    body('phone').isMobilePhone().withMessage('Please enter a valid phone number')
+    body('phone').isMobilePhone().withMessage('Please enter a valid phone number'),
+    body('taxNumber').custom(isValidTaxNumber).withMessage('Please enter a valid MID / Merchant Identification')
+
 ];
 
 validatePassword = [

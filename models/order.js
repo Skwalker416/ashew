@@ -11,7 +11,7 @@ const orderSchema = Schema({
     city: { type: String, required: true },
     // country:{type: String, required: true}       //not necessary
     phone: { type: String, required: true },
-    paymentId: String, //will not be using stripe rather chapa Api because we create the order and then make them pay the payment the order will be pending
+    paymentId: { type: String }, //will not be using stripe rather chapa Api because we create the order and then make them pay the payment the order will be pending
     status: {
 
         type: String,

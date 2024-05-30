@@ -43,10 +43,10 @@ exports.getTicketsCount = async function(req, res) {
 };
 exports.changeTicketStatus = async function(req, res) {
     try {
-        const ticketed = req.params.id;
+        const ticketId = req.params.id;
         const newStatus = req.body.status; //admin will send a new status in the request body
 
-        let ticket = await Ticket.findById(orderId);
+        let ticket = await Ticket.findById(ticketId);
         if (!ticket) {
             return res.status(400).json({ message: 'Ticket not found' })
         }

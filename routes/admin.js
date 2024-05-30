@@ -7,7 +7,7 @@ const vendorsController = require('../controllers/admin/vendors')
 const eventOrganizersController = require('../controllers/admin/eventOrganizers')
 const categoriesController = require('../controllers/admin/categories')
 const ordersController = require('../controllers/admin/orders');
-const eventsController = require('../controllers/admin/events');
+const eventsController = require('../controllers/eventOrganizer/events');
 const ticketsController = require('../controllers/admin/tickets');
 const productsController = require('../controllers/admin/products');
 
@@ -28,25 +28,25 @@ router.get('/eventOrganizers/count', eventOrganizersController.getEventOrganizer
 router.delete('/eventOrganizers/:id', eventOrganizersController.deleteEventOrganizer);
 
 //catagories
-router.post('/categories', categoriesController.addCategory);
+// router.post('/categories', categoriesController.addCategory);
 router.put('/categories/:id', categoriesController.editCategory);
 router.delete('/categories/:id', categoriesController.deleteCategory);
 
 //Events
-router.get('/events/count', eventsController.getEventsCount);
-router.get('/products/count', eventsController.getEvents); //admin needs a specific version view 
-router.post('/events', eventsController.addEvents);
-router.put('/events/:id', eventsController.editEvents);
+// router.get('/events/count', eventsController.getEventsCount);
+// router.get('/events/', eventsController.getEvents); //admin needs a specific version view 
+// router.post('/events', eventsController.addEvent);
+// router.put('/events/:id', eventsController.editEvent);
 router.delete('/events/:id/images', eventsController.deleteEventsImages);
-router.delete('/events/:id', eventsController.deleteEvents);
+router.delete('/events/:id', eventsController.deleteEvent);
 
 // //products //this is a might be function where an admin posts a  vendor product to be purchased by users
-router.get('/products/count', productsController.getProductsCount);
-router.get('/products/count', productsController.getProducts); //admin needs a specific version view 
-router.post('/products', productsController.addProducts);
-router.put('/products/:id', productsController.editProducts);
-router.delete('/products/:id/images', productsController.deleteProductsImages); //will have the same function as '''''EVENTS''''''
-router.delete('/products/:id', productsController.deleteProducts);
+// router.get('/products/count', productsController.getProductsCount);
+router.get('/products/', productsController.getProducts); //admin needs a specific version view 
+router.post('/products', productsController.addProduct);
+router.put('/products/:id', productsController.editProduct);
+// router.delete('/products/:id/images', productsController.deleteProductsImages); //will have the same function as '''''EVENTS''''''
+router.delete('/products/:id', productsController.deleteProduct);
 
 //order's product
 router.get('/orders', ordersController.getOrders);

@@ -229,7 +229,7 @@ exports.forgotPassword = async function(req, res) {
         await entity.save();
 
         // Assuming you have a mail sending function defined
-        const response = await mailSender.sendmail(
+        const response = await mailSender.sendMail(
             email,
             'Password Reset OTP',
             `Your OTP for password reset is: ${otp}`

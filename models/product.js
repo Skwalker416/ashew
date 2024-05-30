@@ -1,46 +1,59 @@
 const { Schema, model } = require('mongoose');
-
+const mongoose = require('mongoose');
 const productSchema = Schema({
-    //schema stored as _id in the database
-    name: { type: String, required: true },
+    //     name: { type: String, required: true },
+    //     description: { type: String, required: true },
+    //     price: { type: Number, required: true },
+    //     rating: { type: Number, default: 0.0 },
+    //     colours: [{ type: String }],
+    //     image: { type: String, required: true },
+    //     images: [{ type: String }],
+    //     reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
+    //     numberOfReviews: { type: Number, default: 0 },
+    //     sizes: [{ type: String }],
+    //     category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
+    //     genderAgeCategory: { type: String, enum: ['men', 'women', 'unisex', 'kids'] },
+    //     countInStock: { type: Number, required: true, min: 0, max: 255 },
+    //     dateAdded: { type: Date, default: Date.now },
+    // });
+
+    title: { type: String, required: false },
+    time: { type: String, required: false },
+    productTags: { type: Array, required: false },
+    category: { type: String, required: false },
+    productType: { type: Array, required: false },
+    code: { type: String, required: false },
+    isAvailable: { type: Boolean, default: true },
+    vendor: { type: String, required: true },
+    reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
+    rating: { type: Number, min: 1, max: 5, default: 3 },
+    ratingCount: { type: String, default: "267" },
     description: { type: String, required: true },
     price: { type: Number, required: true },
-    rating: { type: Number, required: true },
-    colors: [{ type: String }],
-    image: { type: String, required: true },
-    images: [{ type: String }],
-    reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
-    numberOfReviews: { type: Number, default: 0 },
-    sizes: [{ type: String }],
-    category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
-    genderAgeCategory: { type: String, enum: ['men', 'women', 'unisex'] }, //its a type string but enum indicates that it should be in the list of constraints
-    countInStock: { type: Number, required: true, min: 0, max: 200 },
-    dateAdded: { type: Date, default: Date.now }
-
+    additives: { type: Array, default: [] },
+    imageUrl: { type: Array, required: false },
 });
 
-// pre_save hook //hey before you save that data let me do something real quick 
-
+// pre-save hook
 productSchema.pre('save', async function(next) {
-    if (this.review.length > 0) {
+    if (this.reviews.length > 0) {
         await this.populate('reviews');
-        const totalRating = this.reviews.reduce((acc, review) => acc + review.rating, 0); //this will not save it rather just waits before saving all the reviews
 
+        const totalRating = this.reviews.reduce(
+            (acc, review) => acc + review.rating,
+            0
+        );
 
-        this.review = totalRating / this.reviews.length; //average rating
-        this.rating = parseFloat((totalRating / this.reviews.length))
+        this.rating = totalRating / this.reviews.length;
+        this.rating = parseFloat((totalRating / this.reviews.length).toFixed(1));
         this.numberOfReviews = this.reviews.length;
     }
     next();
 });
 
-//enabling forward text search by a user
 productSchema.index({ name: 'text', description: 'text' });
-
-// in order to convert the schema to Json
-//when ever a flutter client fetches for themselves they are going to get the normal id/ will apear normal rather as _id property
 
 productSchema.set('toObject', { virtuals: true });
 productSchema.set('toJSON', { virtuals: true });
 
-exports.Product = model('Product', productSchema)
+exports.Product = model('Product', productSchema);

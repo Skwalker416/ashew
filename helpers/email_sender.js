@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 
-exports.sendmail = async(email, subject, body) => {
+exports.sendMail = async(email, subject, body) => {
     //Asheweyna@gmail.com will be the email sender
     return new Promise((resolve, reject) => {
         const transporter = nodemailer.createTransport({

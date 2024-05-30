@@ -4,12 +4,7 @@ const eventOrganizerSchema = Schema({
     // role: { type: String, required: true, trim: true },
     eventOrganizerName: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true },
-    //Validator for email ===> validate: {validator: (value) => {
-    //     //validate emails
-    //     const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    // },message: 'Please enter a valid email',
-    // }},
-
+    taxNumber: { type: Number },
 
     passwordHash: { type: String, required: true, trim: true },
     city: String,
@@ -17,13 +12,17 @@ const eventOrganizerSchema = Schema({
     isAdmin: { type: Boolean, default: false },
     resetPasswordOtp: Number, //must be null since the otp should vanish after been used
     resetPasswordOtpExpires: Date,
-    wishlist: [ //like button
-        {
-            eventId: { type: Schema.Types.ObjectId, ref: 'Event' },
-            //what if the event gets deleted but still in their wish list
-            eventName: { type: Number, required: true }
-        }
-    ]
+
+    coords: {
+        id: { type: String },
+        latitude: { type: Number, required: true },
+        longitude: { type: Number, required: true },
+        latitudeDelta: { type: Number, default: 0.0122 },
+        longitudeDelta: { type: Number, default: 0.0122 },
+        address: { type: String, required: true },
+        title: { type: String, required: true },
+    }
+
 });
 eventOrganizerSchema.set('toObject', { virtuals: true });
 eventOrganizerSchema.set('toJSON', { virtuals: true });
