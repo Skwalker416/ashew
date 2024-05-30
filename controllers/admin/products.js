@@ -37,6 +37,7 @@ exports.addProducts = async function(req, res) {
         const category = await Category.findByI(req.body.category);
         if (!category) return res.status(404).json({ message: 'Invalid Category.' })
         if (!category.markedForDeletion) {
+
             return res.status(404).json({ message: 'Category marked for deletion, you can not add products to this category.' })
         }
     } catch (error) {
