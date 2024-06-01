@@ -122,7 +122,11 @@ const hostname = env.HOST;
 const port = env.PORT;
 // require('./helpers/cron_job'); 
 mongoose
-    .connect(env.MONGODB_CONNECTION_STRING)
+    .connect(env.MONGODB_CONNECTION_STRING,
+        //  "mongodb://localhost:27017/chapa-integration", 
+        {
+            useNewUrlParser: true,
+        })
     .then(() => {
         console.log('Connected to Database');
     })

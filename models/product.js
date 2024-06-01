@@ -16,7 +16,11 @@ const productSchema = Schema({
     //     countInStock: { type: Number, required: true, min: 0, max: 255 },
     //     dateAdded: { type: Date, default: Date.now },
     // });
-
+    productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+        required: true
+    },
     title: { type: String, required: false },
     time: { type: String, required: false },
     productTags: { type: Array, required: false },
@@ -32,8 +36,13 @@ const productSchema = Schema({
     price: { type: Number, required: true },
     additives: { type: Array, default: [] },
     imageUrl: { type: Array, required: false },
-});
 
+    paymentStatus: {
+        type: String,
+        enum: ["pending", "completed"],
+        default: "pending",
+    },
+}, { timestamps: true }, );
 // pre-save hook
 productSchema.pre('save', async function(next) {
     if (this.reviews.length > 0) {

@@ -5,6 +5,7 @@ const { OrderItem } = require('../../models/order_item');
 const { Ticket } = require('../../models/ticket');
 const { TicketItem } = require('../../models/ticket_item');
 
+
 exports.getUserCount = async function(req, res) {
     try {
         const userCount = await User.countDocuments();

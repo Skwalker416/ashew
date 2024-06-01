@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <h1>Admin Dashboard</h1>
+    <nav>
+        <a href="/admin/dashboard">Dashboard</a>
+        <a href="/admin/users">Users</a>
+        <a href="/admin/vendors">Vendors</a>
+        <a href="/admin/eventOrganizers">Event Organizers</a>
+        <a href="/admin/categories">Categories</a>
+        <a href="/admin/orders">Orders</a>
+        <a href="/admin/events">Events</a>
+        <a href="/admin/tickets">Tickets</a>
+        <a href="/admin/products">Products</a>
+    </nav>
+    <div>
+        <h2>Statistics</h2>
+        <p>Users Count:
+            <%= data.usersCount %>
+        </p>
+        <p>Vendors Count:
+            <%= data.vendorsCount %>
+        </p>
+        <p>Event Organizers Count:
+            <%= data.eventOrganizersCount %>
+        </p>
+    </div>
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
+const adminController = require('../controllers/admin/admin')
 
 const usersController = require('../controllers/admin/users')
 const vendorsController = require('../controllers/admin/vendors')
@@ -10,6 +11,11 @@ const ordersController = require('../controllers/admin/orders');
 const eventsController = require('../controllers/eventOrganizer/events');
 const ticketsController = require('../controllers/admin/tickets');
 const productsController = require('../controllers/admin/products');
+// const authMiddleware = require('../middlewares/auth');
+
+router.get('/dashboard', adminController.getDashboard);
+router.get('/admin', adminController.getUserById);
+// Add authMiddleware to other routes as needed
 
 //theory >>>> vendor and eventOrganizers must add products and tickets through the admins approval so we will use this admin routes to ADD PRODUCTS and ADD EVENTS
 
